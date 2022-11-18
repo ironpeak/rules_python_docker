@@ -1,3 +1,5 @@
+load("//pip:defs.bzl", _pip_import = "pip_import")
+
 def py_library(**kwargs):
     """See the Bazel core [py_library](https://docs.bazel.build/versions/master/be/python.html#py_library) documentation.
 
@@ -27,3 +29,5 @@ def py_test(**kwargs):
 
     # buildifier: disable=native-python
     native.py_test(**kwargs)
+
+pip_import = _pip_import
