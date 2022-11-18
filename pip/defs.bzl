@@ -34,7 +34,7 @@ def _pip_host_import_impl(repository_ctx):
             fail("pip_compile failed: %s (%s)" % (result.stdout, result.stderr))
 
     args = [
-        python_interpreter,
+        "python",
         repository_ctx.path(repository_ctx.attr._script),
         "--name",
         repository_ctx.attr.name,
@@ -114,7 +114,7 @@ def _pip_container_import_impl(repository_ctx):
     repository_ctx.file("requirements.txt", content = reqs, executable = False)
     if repository_ctx.attr.compile:
         result = _execute(repository_ctx, [
-            python_interpreter,
+            "python",
             repository_ctx.path(repository_ctx.attr._compiler),
             "--quiet",
             "--allow-unsafe",
@@ -130,7 +130,7 @@ def _pip_container_import_impl(repository_ctx):
             fail("pip_compile failed: %s (%s)" % (result.stdout, result.stderr))
 
     args = [
-        python_interpreter,
+        "python",
         repository_ctx.path(repository_ctx.attr._script),
         "--name",
         repository_ctx.attr.name,
@@ -160,7 +160,7 @@ pip_container_import = repository_rule(
             allow_single_file = True,
             doc = "requirement.txt file generatd by pip-compile",
         ),
-        "image": attr.string(manditory = True, doc = """
+        "image": attr.string(mandatory = True, doc = """
 The docker image to use for the pip install.
 """),
         "repo_prefix": attr.string(default = "pypi", doc = """
