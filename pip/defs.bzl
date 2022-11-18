@@ -104,12 +104,13 @@ This replaces "protobuf" with the bazel version even for indirect dependencies o
     implementation = _pip_import_impl,
 )
 
-def pip_import(name, requirements, requirements_lock, **kwargs):
+def pip_import(name, requirements, requirements_lock, host_overrides = {}, container_overrides = {}, **kwargs):
     _pip_import(
         name = name + "_host",
         requirements = requirements,
         compile = True,
         repo_prefix = name + "_host",
+        overrides = host_overrides,
         **kwargs
     )
 
@@ -118,6 +119,7 @@ def pip_import(name, requirements, requirements_lock, **kwargs):
         requirements = requirements_lock,
         compile = False,
         repo_prefix = name + "_container",
+        overrides = container_overrides,
         **kwargs
     )
 
