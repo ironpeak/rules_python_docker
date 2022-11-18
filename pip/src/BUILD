@@ -4,7 +4,7 @@ py_library(
     name = "whllib",
     srcs = ["whl.py"],
     deps = [
-        "//third_party/py:pypi_vendor",
+        "//pip/third_party/py:pypi_vendor",
     ],
 )
 
@@ -23,7 +23,7 @@ py_binary(
     python_version = "PY3",
     deps = [
         ":whllib",
-        "//third_party/py:pypi_vendor",
+        "//pip/third_party/py:pypi_vendor",
     ],
 )
 
@@ -32,6 +32,6 @@ py_binary(
     srcs = ["compile.py"],
     python_version = "PY3",
     deps = [
-        "//third_party/py:pypi_vendor",
+        "//pip/third_party/py:pypi_vendor",
     ],
 )
