@@ -7,7 +7,6 @@ load("@rules_python_docker//:defs.bzl", "pip_import")
 
 pip_import(
     name = "product",
-    container_requirements = "//:requirements_lock.txt",
-    host_requirements = "//:requirements.in",
-    image = "python:3.10",
+    requirements = "//:requirements.in",
+    requirements_lock = "//:requirements_lock.txt",
 )
