@@ -81,7 +81,6 @@ def whl_library(
     extras,
     repo_name,
     pip_repo_name,
-    python_interpreter,
     timeout,
     quiet,
     req_to_overrides,
@@ -93,7 +92,6 @@ def whl_library(
         extras: extras for this lib
         repo_name: repo name used for this lib
         pip_repo_name: pip_import repo
-        python_interpreter:
         timeout: timeout for pip actions
         quiet: makes command run in quiet mode
         req_to_overrides: map from requirement to replacement label
@@ -107,7 +105,6 @@ def whl_library(
         name = "{repo_name}",
         pkg = "{name}",
         requirements_repo = "@{pip_repo_name}",
-        # python_interpreter = "{python_interpreter}",
         extras = [{extras}],
         pip_args = pip_args,
         timeout = {timeout},
@@ -117,7 +114,6 @@ def whl_library(
         name=name,
         repo_name=repo_name,
         pip_repo_name=pip_repo_name,
-        python_interpreter=python_interpreter.replace("\\", "/"),
         extras=",".join(['"%s"' % extra for extra in extras]),
         timeout=timeout,
         quiet=quiet,
@@ -207,7 +203,6 @@ def main():
                     extras,
                     repo_name,
                     args.name,
-                    sys.executable,
                     args.timeout,
                     args.quiet,
                     req_to_overrides,
@@ -223,7 +218,7 @@ def main():
             """\
 # Install pip requirements.
 
-load("@rules_python_docker//pip:defs.bzl", "whl_library")
+load("@com_github_ironpeak_rules_python_docker//pip:defs.bzl", "whl_library")
 
 def pip_install(pip_args=[]):
   {whl_libraries}

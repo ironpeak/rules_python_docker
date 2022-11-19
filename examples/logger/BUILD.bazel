@@ -1,4 +1,4 @@
-load("@rules_python_docker//:defs.bzl", "py_library", "py_test")
+load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "py_library", "py_test")
 
 py_library(
     name = "lib",

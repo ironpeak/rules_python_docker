@@ -56,7 +56,7 @@ def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = 
         main = main,
         deps = deps,
         data = data + [
-            "@rules_python_docker//python:entrypoint.sh",
+            "@com_github_ironpeak_rules_python_docker//python:entrypoint.sh",
         ],
         exec_compatible_with = ["@io_bazel_rules_docker//platforms:run_in_container"],
         tags = ["manual"],
@@ -67,7 +67,7 @@ def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = 
     app_layer(
         name = name,
         base = base,
-        entrypoint = ["../rules_python_docker/python/entrypoint.sh"],
+        entrypoint = ["../com_github_ironpeak_rules_python_docker/python/entrypoint.sh"],
         env = env,
         binary = binary_name,
         tags = tags,

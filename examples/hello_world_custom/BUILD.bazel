@@ -1,4 +1,4 @@
-load("@rules_python_docker//:defs.bzl", "py_image_with_requirements", "py_library", "py_test_with_requirements")
+load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "py_image_with_requirements", "py_library", "py_test_with_requirements")
 
 py_image_with_requirements(
     name = "hello_world_custom",
