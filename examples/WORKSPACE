@@ -111,14 +111,8 @@ pip_import(
 
 load("@pip_hello_world_custom_host//:requirements.bzl", pip_hello_world_custom_host_pip_install = "pip_install")
 
-pip_hello_world_custom_host_pip_install([
-    "--only-binary",
-    ":all",
-])
+pip_hello_world_custom_host_pip_install()
 
 load("@pip_hello_world_custom_container//:requirements.bzl", pip_hello_world_custom_container_pip_install = "pip_install")
 
-pip_hello_world_custom_container_pip_install([
-    "--only-binary",
-    ":all",
-])
+pip_hello_world_custom_container_pip_install()
