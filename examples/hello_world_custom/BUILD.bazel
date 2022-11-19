@@ -11,7 +11,9 @@ py_image_with_requirements(
         ":lib",
     ],
     main = "main.py",
+    pip_import = "pip_hello_world_custom",
     deps = [
+        "psycopg2-binary",
         "termcolor",
         "xxhash",
     ],
@@ -37,6 +39,10 @@ py_test_with_requirements(
     libs = [
         ":lib",
     ],
-    pip_import = "hello_world_custom",
+    pip_import = "pip_hello_world_custom",
     visibility = ["//visibility:public"],
+    deps = [
+        "termcolor",
+        "xxhash",
+    ],
 )

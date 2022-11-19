@@ -23,6 +23,7 @@ py_library(
         "//logger:lib",
     ],
     deps = [
+        "psycopg2-binary",
         "xxhash",
     ],
 )
