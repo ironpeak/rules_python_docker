@@ -1,0 +1,2 @@
+pip-compile directory:
+    docker run --rm -it --platform linux/amd64 -v "$(pwd):/app" -w /app python:3.10 /bin/bash -c "./pip_compile.sh {{directory}}"

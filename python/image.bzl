@@ -5,7 +5,7 @@ load(
     "app_layer",
 )
 
-def py_image(name, libs, deps, base, **kwargs):
+def py_image(name, base = None, libs = [], deps = [], **kwargs):
     py_binary(
         name = name + ".binary",
         libs = libs,
@@ -20,7 +20,7 @@ def py_image(name, libs, deps, base, **kwargs):
         **kwargs
     )
 
-def py_image_with_requirements(name, libs, deps, pip_import, base, **kwargs):
+def py_image_with_requirements(name, base = None, libs = [], deps = [], pip_import = "pip_monorepo", **kwargs):
     py_binary_with_requirements(
         name = name + ".binary",
         libs = libs,
@@ -61,6 +61,13 @@ def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = 
         visibility = ["//visibility:private"],
         **kwargs
     )
+
+    base = base or select({
+        "@io_bazel_rules_docker//:debug": "@py3_debug_image_base//image",
+        "@io_bazel_rules_docker//:fastbuild": "@py3_image_base//image",
+        "@io_bazel_rules_docker//:optimized": "@py3_image_base//image",
+        "//conditions:default": "@py3_image_base//image",
+    })
 
     app_layer(
         name = name,
