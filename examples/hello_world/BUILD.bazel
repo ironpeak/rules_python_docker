@@ -1,0 +1,39 @@
+load("@rules_python_docker//:defs.bzl", "py_image", "py_library", "py_test")
+
+py_image(
+    name = "hello_world",
+    srcs = ["main.py"],
+    imports = [
+        "..",
+    ],
+    libs = [
+        ":lib",
+    ],
+    main = "main.py",
+)
+
+py_library(
+    name = "lib",
+    srcs = ["lib.py"],
+    imports = [
+        "..",
+    ],
+    libs = [
+        "//logger:lib",
+    ],
+    deps = [
+        "xxhash",
+    ],
+)
+
+py_test(
+    name = "test",
+    srcs = ["test.py"],
+    imports = [
+        "..",
+    ],
+    libs = [
+        ":lib",
+    ],
+    visibility = ["//visibility:public"],
+)

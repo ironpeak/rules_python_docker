@@ -107,7 +107,7 @@ def whl_library(
         name = "{repo_name}",
         pkg = "{name}",
         requirements_repo = "@{pip_repo_name}",
-        python_interpreter = "{python_interpreter}",
+        # python_interpreter = "{python_interpreter}",
         extras = [{extras}],
         pip_args = pip_args,
         timeout = {timeout},

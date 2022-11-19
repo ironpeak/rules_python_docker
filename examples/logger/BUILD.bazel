@@ -1,0 +1,22 @@
+load("@rules_python_docker//:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lib",
+    srcs = ["__init__.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "termcolor",
+    ],
+)
+
+py_test(
+    name = "test",
+    srcs = ["test.py"],
+    imports = [
+        "..",
+    ],
+    libs = [
+        ":lib",
+    ],
+    visibility = ["//visibility:public"],
+)
