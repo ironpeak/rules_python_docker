@@ -1,6 +1,6 @@
 """Import pip requirements into Bazel."""
 
-pip_vendor_label = Label("@rules_python_docker//pip:third_party/py/BUILD")
+pip_vendor_label = Label("@com_github_ironpeak_rules_python_docker//pip:third_party/py/BUILD")
 
 def _execute(repository_ctx, arguments, quiet = False):
     pip_vendor = str(repository_ctx.path(pip_vendor_label).dirname)
@@ -86,13 +86,13 @@ This replaces "protobuf" with the bazel version even for indirect dependencies o
         "timeout": attr.int(default = 1200, doc = "Timeout for pip actions"),
         "_script": attr.label(
             executable = True,
-            default = Label("@rules_python_docker//pip/src:piptool.py"),
+            default = Label("@com_github_ironpeak_rules_python_docker//pip/src:piptool.py"),
             allow_single_file = True,
             cfg = "exec",
         ),
         "_compiler": attr.label(
             executable = True,
-            default = Label("@rules_python_docker//pip/src:compile.py"),
+            default = Label("@com_github_ironpeak_rules_python_docker//pip/src:compile.py"),
             allow_single_file = True,
             cfg = "exec",
         ),
@@ -168,7 +168,7 @@ whl_library = repository_rule(
         "overrides": attr.label_keyed_string_dict(),
         "_script": attr.label(
             executable = True,
-            default = Label("@rules_python_docker//pip/src:whl.py"),
+            default = Label("@com_github_ironpeak_rules_python_docker//pip/src:whl.py"),
             cfg = "exec",
         ),
         "quiet": attr.bool(

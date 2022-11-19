@@ -62,7 +62,7 @@ container_pull(
 
 # python_docker
 local_repository(
-    name = "rules_python_docker",
+    name = "com_github_ironpeak_rules_python_docker",
     path = "..",
 )
 
@@ -71,7 +71,7 @@ local_repository(
     path = "overrides",
 )
 
-load("@rules_python_docker//:defs.bzl", "pip_import")
+load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "pip_import")
 
 # pip_monorepo
 pip_import(

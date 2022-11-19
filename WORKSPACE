@@ -1,4 +1,4 @@
-workspace(name = "rules_python_docker")
+workspace(name = "com_github_ironpeak_rules_python_docker")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
