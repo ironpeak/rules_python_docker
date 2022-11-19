@@ -1,0 +1,16 @@
+py_library(
+    name = "psycopg2-binary",
+    srcs = glob(
+        include = [
+            "**/*.py",
+        ],
+    ),
+    data = glob(
+        include = [
+            "**/*.so",
+            "**/*.so.*",
+        ],
+    ),
+    imports = ["."],
+    visibility = ["//visibility:public"],
+)

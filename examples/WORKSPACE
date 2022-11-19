@@ -73,10 +73,12 @@ local_repository(
 
 load("@rules_python_docker//:defs.bzl", "pip_import")
 
+# pip_monorepo
 pip_import(
     name = "pip_monorepo",
     container_overrides = {
-        "@pip_overrides//python/xxhash:xxhash": "xxhash",
+        "@pip_overrides//python/psycopg2-binary": "psycopg2-binary",
+        "@pip_overrides//python/xxhash": "xxhash",
     },
     requirements = "//:requirements.in",
     requirements_lock = "//:requirements_lock.txt",
@@ -92,6 +94,31 @@ pip_monorepo_host_pip_install([
 load("@pip_monorepo_container//:requirements.bzl", pip_monorepo_container_pip_install = "pip_install")
 
 pip_monorepo_container_pip_install([
+    "--only-binary",
+    ":all",
+])
+
+# pip_hello_world_custom
+pip_import(
+    name = "pip_hello_world_custom",
+    container_overrides = {
+        "@pip_overrides//python/psycopg2-binary": "psycopg2-binary",
+        "@pip_overrides//python/xxhash": "xxhash",
+    },
+    requirements = "//:requirements.in",
+    requirements_lock = "//:requirements_lock.txt",
+)
+
+load("@pip_hello_world_custom_host//:requirements.bzl", pip_hello_world_custom_host_pip_install = "pip_install")
+
+pip_hello_world_custom_host_pip_install([
+    "--only-binary",
+    ":all",
+])
+
+load("@pip_hello_world_custom_container//:requirements.bzl", pip_hello_world_custom_container_pip_install = "pip_install")
+
+pip_hello_world_custom_container_pip_install([
     "--only-binary",
     ":all",
 ])
