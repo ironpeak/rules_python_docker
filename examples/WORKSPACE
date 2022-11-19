@@ -48,11 +48,17 @@ load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 container_deps()
 
 load(
-    "@io_bazel_rules_docker//python3:image.bzl",
-    _py3_image_repos = "repositories",
+    "@io_bazel_rules_docker//container:pull.bzl",
+    "container_pull",
 )
 
-_py3_image_repos()
+container_pull(
+    name = "python",
+    architecture = "amd64",
+    digest = "sha256:eef39ed128b235c95c723eabe2de05670ba87f3273cc784effe4c3d9d0847c09",
+    registry = "docker.io",
+    repository = "python",
+)
 
 # python_docker
 local_repository(
@@ -60,10 +66,18 @@ local_repository(
     path = "..",
 )
 
+local_repository(
+    name = "pip_overrides",
+    path = "overrides",
+)
+
 load("@rules_python_docker//:defs.bzl", "pip_import")
 
 pip_import(
     name = "pip_monorepo",
+    container_overrides = {
+        "@pip_overrides//python/xxhash:xxhash": "xxhash",
+    },
     requirements = "//:requirements.in",
     requirements_lock = "//:requirements_lock.txt",
 )

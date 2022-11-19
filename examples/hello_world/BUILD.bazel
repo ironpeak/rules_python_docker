@@ -3,6 +3,7 @@ load("@rules_python_docker//:defs.bzl", "py_image", "py_library", "py_test")
 py_image(
     name = "hello_world",
     srcs = ["main.py"],
+    base = "@python//image",
     imports = [
         "..",
     ],

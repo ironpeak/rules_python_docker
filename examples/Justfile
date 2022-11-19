@@ -1,2 +1,10 @@
 pip-compile directory:
     docker run --rm -it --platform linux/amd64 -v "$(pwd):/app" -w /app python:3.10 /bin/bash -c "./pip_compile.sh {{directory}}"
+
+test:
+    bazel run //hello_world:hello_world.binary
+    bazel run //hello_world:hello_world
+    bazel run //hello_world_custom:hello_world_custom.binary
+    bazel run //hello_world_custom:hello_world_custom
+    bazel test //hello_world:test
+    bazel test //hello_world_custom:test
