@@ -1,11 +1,11 @@
-load("//python:internal.bzl", "get_lib_srcs", "map_dep")
+load("//python:internal.bzl", "get_lib_srcs", "map_dep", "map_lib")
 load("//python:binary.bzl", "py_binary", "py_binary_with_requirements")
 load(
     "@io_bazel_rules_docker//lang:image.bzl",
     "app_layer",
 )
 
-def py_image(name, base = None, libs = [], deps = [], **kwargs):
+def py_image(name, base, libs = [], deps = [], **kwargs):
     py_binary(
         name = name + ".binary",
         libs = libs,
@@ -15,12 +15,12 @@ def py_image(name, base = None, libs = [], deps = [], **kwargs):
 
     _py3_image(
         name = name,
-        deps = libs + [map_dep("pip_monorepo_container", dep) for dep in deps],
+        deps = [map_lib(lib) for lib in libs] + [map_dep("pip_monorepo_container", dep) for dep in deps],
         base = base,
         **kwargs
     )
 
-def py_image_with_requirements(name, base = None, libs = [], deps = [], pip_import = "pip_monorepo", **kwargs):
+def py_image_with_requirements(name, base, libs = [], deps = [], pip_import = "pip_monorepo", **kwargs):
     py_binary_with_requirements(
         name = name + ".binary",
         libs = libs,
@@ -55,24 +55,19 @@ def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = 
         name = binary_name,
         main = main,
         deps = deps,
-        data = data,
+        data = data + [
+            "@rules_python_docker//python:entrypoint.sh",
+        ],
         exec_compatible_with = ["@io_bazel_rules_docker//platforms:run_in_container"],
         tags = ["manual"],
         visibility = ["//visibility:private"],
         **kwargs
     )
 
-    base = base or select({
-        "@io_bazel_rules_docker//:debug": "@py3_debug_image_base//image",
-        "@io_bazel_rules_docker//:fastbuild": "@py3_image_base//image",
-        "@io_bazel_rules_docker//:optimized": "@py3_image_base//image",
-        "//conditions:default": "@py3_image_base//image",
-    })
-
     app_layer(
         name = name,
         base = base,
-        entrypoint = ["/usr/bin/python"],
+        entrypoint = ["../rules_python_docker/python/entrypoint.sh"],
         env = env,
         binary = binary_name,
         tags = tags,
