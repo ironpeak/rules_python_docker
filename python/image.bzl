@@ -5,7 +5,7 @@ load(
     "app_layer",
 )
 
-def py_image(name, base, libs = [], deps = [], **kwargs):
+def py_image(name, base, libs = [], deps = [], env = {}, **kwargs):
     py_binary(
         name = name + ".binary",
         libs = libs,
@@ -17,10 +17,11 @@ def py_image(name, base, libs = [], deps = [], **kwargs):
         name = name,
         deps = [map_lib(lib) for lib in libs] + [map_dep("pip_monorepo_container", dep) for dep in deps],
         base = base,
+        env = env,
         **kwargs
     )
 
-def py_image_with_requirements(name, base, libs = [], deps = [], pip_import = "pip_monorepo", **kwargs):
+def py_image_with_requirements(name, base, libs = [], deps = [], pip_import = "pip_monorepo", env = {}, **kwargs):
     py_binary_with_requirements(
         name = name + ".binary",
         libs = libs,
@@ -33,6 +34,7 @@ def py_image_with_requirements(name, base, libs = [], deps = [], pip_import = "p
         name = name,
         deps = [get_lib_srcs(lib) for lib in libs] + [map_dep("{}_container".format(pip_import), dep) for dep in deps],
         base = base,
+        env = env,
         **kwargs
     )
 
