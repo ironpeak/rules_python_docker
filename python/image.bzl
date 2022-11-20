@@ -5,9 +5,11 @@ load(
     "app_layer",
 )
 
-def py_image(name, base, libs = [], deps = [], env = {}, **kwargs):
+def py_image(name, base, main = "main.py", srcs = ["main.py"], libs = [], deps = [], env = {}, **kwargs):
     py_binary(
         name = name + ".binary",
+        main = main,
+        srcs = srcs,
         libs = libs,
         deps = deps,
         **kwargs
@@ -15,15 +17,19 @@ def py_image(name, base, libs = [], deps = [], env = {}, **kwargs):
 
     _py3_image(
         name = name,
+        main = main,
+        srcs = srcs,
         deps = [map_lib(lib) for lib in libs] + [map_dep("pip_monorepo_container", dep) for dep in deps],
         base = base,
         env = env,
         **kwargs
     )
 
-def py_image_with_requirements(name, base, libs = [], deps = [], pip_import = "pip_monorepo", env = {}, **kwargs):
+def py_image_with_requirements(name, base, main = "main.py", srcs = ["main.py"], libs = [], deps = [], pip_import = "pip_monorepo", env = {}, **kwargs):
     py_binary_with_requirements(
         name = name + ".binary",
+        main = main,
+        srcs = srcs,
         libs = libs,
         deps = deps,
         pip_import = pip_import,
@@ -32,19 +38,19 @@ def py_image_with_requirements(name, base, libs = [], deps = [], pip_import = "p
 
     _py3_image(
         name = name,
+        main = main,
+        srcs = srcs,
         deps = [get_lib_srcs(lib) for lib in libs] + [map_dep("{}_container".format(pip_import), dep) for dep in deps],
         base = base,
         env = env,
         **kwargs
     )
 
-def _py3_image(name, main = "main.py", srcs = ["main.py"], base = None, deps = [], env = {}, data = [], tags = [], visibility = None, **kwargs):
+def _py3_image(name, base, deps = [], env = {}, data = [], tags = [], visibility = None, **kwargs):
     """Constructs a container image wrapping a py_binary target.
 
     Args:
         name: Name of the py3_image rule target.
-        main: Name of the entry file.
-        srcs: Source files.
         base: Base image to use for the py3_image.
         deps: Dependencies of the py3_image.
         env: Environment variables for the py_image.
@@ -57,8 +63,6 @@ def _py3_image(name, main = "main.py", srcs = ["main.py"], base = None, deps = [
 
     native.py_binary(
         name = binary_name,
-        main = main,
-        srcs = srcs,
         deps = deps,
         data = data + [
             "@com_github_ironpeak_rules_python_docker//python:entrypoint.sh",
