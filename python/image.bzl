@@ -38,7 +38,7 @@ def py_image_with_requirements(name, base, libs = [], deps = [], pip_import = "p
         **kwargs
     )
 
-def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = [], tags = [], **kwargs):
+def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = [], tags = [], visibility = None, **kwargs):
     """Constructs a container image wrapping a py_binary target.
 
     Args:
@@ -49,6 +49,7 @@ def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = 
         env: Environment variables for the py_image.
         data: Data for the py_image.
         tags: Tags for the py_image.
+        visibility: Target visibility.
         **kwargs: See py_binary.
     """
     binary_name = "_" + name + ".container.binary"
@@ -75,7 +76,7 @@ def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = 
         tags = tags,
         args = kwargs.get("args"),
         testonly = kwargs.get("testonly"),
-        visibility = ["//visibility:private"],
+        visibility = visibility,
         # The targets of the symlinks in the symlink layers are relative to the
         # workspace directory under the app directory. Thus, create an empty
         # workspace directory to ensure the symlinks are valid. See
