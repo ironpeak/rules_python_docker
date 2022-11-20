@@ -38,12 +38,13 @@ def py_image_with_requirements(name, base, libs = [], deps = [], pip_import = "p
         **kwargs
     )
 
-def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = [], tags = [], visibility = None, **kwargs):
+def _py3_image(name, main = "main.py", srcs = ["main.py"], base = None, deps = [], env = {}, data = [], tags = [], visibility = None, **kwargs):
     """Constructs a container image wrapping a py_binary target.
 
     Args:
         name: Name of the py3_image rule target.
         main: Name of the entry file.
+        srcs: Source files.
         base: Base image to use for the py3_image.
         deps: Dependencies of the py3_image.
         env: Environment variables for the py_image.
@@ -57,6 +58,7 @@ def _py3_image(name, main = "main.py", base = None, deps = [], env = {}, data = 
     native.py_binary(
         name = binary_name,
         main = main,
+        srcs = srcs,
         deps = deps,
         data = data + [
             "@com_github_ironpeak_rules_python_docker//python:entrypoint.sh",
