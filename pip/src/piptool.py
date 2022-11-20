@@ -210,7 +210,7 @@ def main():
             )
 
     mappings = ",\n  ".join(
-        '"%s": "%s"' % (name, target) for name, target in whl_targets.items()
+        '"%s": "%s"' % (re.sub("[-.+]", "-", name), target) for name, target in whl_targets.items()
     )
 
     with open(args.output, "w") as _f:
