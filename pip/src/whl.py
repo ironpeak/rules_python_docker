@@ -3,6 +3,7 @@ import argparse
 import glob
 import logging
 import os
+import re
 import shutil
 import sys
 
@@ -117,7 +118,7 @@ def dependencies(pkg, extra=None):
     for dist in pkg.requires_dist:
         requirement = pkg_resources.Requirement.parse(dist)
         # we replace all underscores with dash, to make package names similiar in all cases
-        name = requirement.name.replace("_", "-")
+        name = re.sub("[-.+]", "_", requirement.name)
         if extra:
             # for extras we don't grab dependencies for the main pkg,
             # those are already in the main plg rule
