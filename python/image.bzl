@@ -64,9 +64,7 @@ def _py3_image(name, base, deps = [], env = {}, data = [], tags = [], visibility
     native.py_binary(
         name = binary_name,
         deps = deps,
-        data = data + [
-            "@com_github_ironpeak_rules_python_docker//python:entrypoint.sh",
-        ],
+        data = data,
         exec_compatible_with = ["@io_bazel_rules_docker//platforms:run_in_container"],
         tags = ["manual"],
         visibility = ["//visibility:private"],
@@ -76,7 +74,6 @@ def _py3_image(name, base, deps = [], env = {}, data = [], tags = [], visibility
     app_layer(
         name = name,
         base = base,
-        entrypoint = ["../com_github_ironpeak_rules_python_docker/python/entrypoint.sh"],
         env = env,
         binary = binary_name,
         tags = tags,
