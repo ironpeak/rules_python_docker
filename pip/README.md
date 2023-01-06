@@ -52,7 +52,7 @@ http_archive(
     urls = ["https://github.com/ali5h/rules_pip/archive/<revision>.tar.gz"],
 )
 
-load("@com_github_ironpeak_rules_python_docker//pip:defs.bzl", "pip_import")
+load("@jiko_devx_bazel_rules_python_docker//pip:defs.bzl", "pip_import")
 
 pip_import(
    name = "pip_deps",

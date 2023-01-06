@@ -19,13 +19,13 @@ Add the following to your `WORKSPACE` file:
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
-    name = "com_github_ironpeak_rules_python_docker",
+    name = "jiko_devx_bazel_rules_python_docker",
     strip_prefix = "rules_python_docker-<revision>",
     sha256 = "<revision_hash>",
     urls = ["https://github.com/ironpeak/rules_python_docker/archive/<revision>.tar.gz"],
 )
 
-load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "pip_import")
+load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "pip_import")
 
 # pip_monorepo
 pip_import(
@@ -55,7 +55,7 @@ pip_monorepo_container_pip_install([<optional pip install args])
 The `pip_monorepo` dependencies are used by default when not using the `*_with_requirements` macros so it must be declared in your WORKSPACE file.
 
 ~~~python
-load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "pip_import")
+load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "pip_import")
 
 # pip_monorepo
 pip_import(
@@ -96,7 +96,7 @@ pip_monorepo_container_pip_install([<optional pip install args])
 Declare a `py_binary` target that uses the host dependencies from `pip_monorepo`.
 
 ~~~python
-load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "py_binary")
+load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "py_binary")
 
 py_binary(
     name = "hello_world",
@@ -125,7 +125,7 @@ Declare a `py_binary` target that uses the host dependencies from another `pip_i
 **NOTE** You must declare every pip package in the deps field (in this example every pip package that `:lib` and any of it's dependencies depend on).
 
 ~~~python
-load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "py_binary_with_requirements")
+load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "py_binary_with_requirements")
 
 py_binary_with_requirements(
     name = "hello_world_custom",
@@ -156,7 +156,7 @@ Declare a [container_image](https://github.com/bazelbuild/rules_docker/blob/mast
 It also creates a conveniance `py_binary` target that uses the corresponding host dependencies named `{name}.binary`.
 
 ~~~python
-load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "py_image")
+load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "py_image")
 
 py_image(
     name = "hello_world",
@@ -190,7 +190,7 @@ It also creates a conveniance `py_binary` target that uses the corresponding hos
 **NOTE** You must declare every pip package in the deps field (in this example every pip package that `:lib` and any of it's dependencies depend on).
 
 ~~~python
-load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "py_image_with_requirements")
+load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "py_image_with_requirements")
 
 py_image_with_requirements(
     name = "hello_world_custom",
@@ -222,7 +222,7 @@ py_image_with_requirements(
 Declare `py_library` targets that are used by `py_binary`, `py_image` and `py_test`.
 
 ~~~python
-load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "py_library")
+load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "py_library")
 
 py_library(
     name = "hello_world",
@@ -258,7 +258,7 @@ The example above would create 3 py_library targets:
 Declare `py_test` targets that uses the host requirements from `pip_monorepo`.
 
 ~~~python
-load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "py_test")
+load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "py_test")
 
 py_test(
     name = "hello_world_test",
@@ -287,7 +287,7 @@ Declare `py_test_with_requirements` targets that uses the host requirements anot
 **NOTE** You must declare every pip package in the deps field (in this example every pip package that `:lib` and any of it's dependencies depend on).
 
 ~~~python
-load("@com_github_ironpeak_rules_python_docker//:defs.bzl", "py_test_with_requirements")
+load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "py_test_with_requirements")
 
 py_test_with_requirements(
     name = "hello_world_test",

@@ -218,7 +218,7 @@ def main():
             """\
 # Install pip requirements.
 
-load("@com_github_ironpeak_rules_python_docker//pip:defs.bzl", "whl_library")
+load("@jiko_devx_bazel_rules_python_docker//pip:defs.bzl", "whl_library")
 
 def pip_install(pip_args=[]):
   {whl_libraries}
