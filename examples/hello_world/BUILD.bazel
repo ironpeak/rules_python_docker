@@ -3,7 +3,7 @@ load("@jiko_devx_bazel_rules_python_docker//:defs.bzl", "py_image", "py_library"
 py_image(
     name = "hello_world",
     srcs = ["main.py"],
-    base = "@python//image",
+    base = "@python",
     imports = [
         "..",
     ],

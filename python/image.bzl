@@ -1,9 +1,7 @@
 load("//python:internal.bzl", "get_lib_srcs", "map_dep", "map_lib")
 load("//python:binary.bzl", "py_binary", "py_binary_with_requirements")
-load(
-    "@io_bazel_rules_docker//lang:image.bzl",
-    "app_layer",
-)
+load("@rules_oci//oci:defs.bzl", "oci_image")
+load("//:py_image_layer.bzl", "py_image_layer")
 
 def py_image(name, base, main = "main.py", srcs = ["main.py"], libs = [], deps = [], env = {}, **kwargs):
     py_binary(
@@ -65,24 +63,21 @@ def _py3_image(name, base, deps = [], env = {}, data = [], tags = [], visibility
         name = binary_name,
         deps = deps,
         data = data,
-        exec_compatible_with = ["@io_bazel_rules_docker//platforms:run_in_container"],
         tags = ["manual"],
         visibility = ["//visibility:private"],
         **kwargs
     )
 
-    app_layer(
+    layer_name = "_" + name + ".layer"
+    py_image_layer(
+        name = layer_name,
+        binary = binary_name,
+        root = "/opt",
+    )
+
+    oci_image(
         name = name,
         base = base,
-        env = env,
-        binary = binary_name,
-        tags = tags,
-        args = kwargs.get("args"),
-        testonly = kwargs.get("testonly"),
-        visibility = visibility,
-        # The targets of the symlinks in the symlink layers are relative to the
-        # workspace directory under the app directory. Thus, create an empty
-        # workspace directory to ensure the symlinks are valid. See
-        # https://github.com/bazelbuild/rules_docker/issues/161 for details.
-        create_empty_workspace_dir = True,
+        cmd = ["/opt/"],
+        tars = [layer_name],
     )

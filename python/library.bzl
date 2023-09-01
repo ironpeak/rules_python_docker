@@ -4,7 +4,6 @@ def py_library(name, libs = [], deps = [], **kwargs):
     native.py_library(
         name = "_" + name + ".container",
         deps = [map_lib(lib) for lib in libs] + [map_dep("pip_monorepo_container", dep) for dep in deps],
-        exec_compatible_with = ["@io_bazel_rules_docker//platforms:run_in_container"],
         tags = ["manual"],
         **kwargs
     )

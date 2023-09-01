@@ -1,5 +1,0 @@
-common --enable_platform_specific_config
-
-build:macos --@io_bazel_rules_docker//transitions:enable=false
-
-build --extra_execution_platforms=@io_bazel_rules_docker//platforms:local_container_platform
