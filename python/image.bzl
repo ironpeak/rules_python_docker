@@ -1,6 +1,6 @@
 load("//python:internal.bzl", "get_lib_srcs", "map_dep", "map_lib")
 load("//python:binary.bzl", "py_binary", "py_binary_with_requirements")
-load("@rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
 load("//:py_image_layer.bzl", "py_image_layer")
 
 def py_image(name, base, main = "main.py", srcs = ["main.py"], libs = [], deps = [], env = {}, **kwargs):
@@ -78,6 +78,12 @@ def _py3_image(name, base, deps = [], env = {}, data = [], tags = [], visibility
     oci_image(
         name = name,
         base = base,
-        cmd = ["/opt/"],
+        cmd = ["/opt/" + name + "/" + binary_name],
         tars = [layer_name],
+    )
+
+    oci_tarball(
+        name = "hello_world.tar",
+        image = name,
+        repo_tags = [name + ":latest"],
     )

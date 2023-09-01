@@ -7,8 +7,10 @@ py_library(
     ),
     data = glob(
         include = [
-            "**/*.so",
-            "**/*.so.*",
+            "**/*",
+        ],
+        exclude = [
+            "**/*.py",
         ],
     ),
     imports = ["."],

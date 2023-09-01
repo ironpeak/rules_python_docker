@@ -1,2 +1,2 @@
 precompile package:
-    docker run -it -v $(pwd):/app --platform linux/amd64 python:3.10 /bin/bash -c "pip install --target=/app/{{package}} {{package}}"
+    docker run -it -v $(pwd):/app --platform linux/amd64 python:3.11 /bin/bash -c "pip install --target=/app/{{package}} {{package}}"
